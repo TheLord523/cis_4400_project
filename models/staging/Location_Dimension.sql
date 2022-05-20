@@ -7,5 +7,5 @@ WITH integrated AS(
     LEFT JOIN {{ref('nypd_location')}} ON (location.location_dim_id = nypd_location.location_dim_id)
 )
 
-SELECT DISTINCT *, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS location_dim_id
+SELECT DISTINCT *
 FROM integrated
