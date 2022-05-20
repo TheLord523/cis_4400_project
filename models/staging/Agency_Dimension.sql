@@ -2,8 +2,11 @@
     materialized ="table"
 )}}
 
-SELECT * 
-FROM {{ref('agency')}}
-UNION ALL
+with integrated AS (
 SELECT *
-from {{ref('nypd_agency')}}
+FROM {{ref('nypd_agency')}}
+LEFT JOIN {{ref('agency')}} USING (agency_dim_id)
+)
+
+SELECT agency_dim_id, agency, agency_name
+FROM integrated
