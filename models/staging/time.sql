@@ -1,0 +1,11 @@
+SELECT
+  ROW_NUMBER() OVER() as time_dim_id,
+  t AS full_time,
+  EXTRACT(HOUR FROM t) as hour,
+  EXTRACT(MINUTE FROM t) AS minute,
+  EXTRACT(SECOND FROM t) AS second,
+FROM (
+  SELECT
+    *
+  FROM
+    UNNEST(GENERATE_TIMESTAMP_ARRAY('2018-12-01 00:00:00', '2022-05-01 00:00:00', INTERVAL 10 MINUTE)) AS t )
