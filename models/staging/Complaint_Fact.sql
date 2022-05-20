@@ -1,7 +1,7 @@
 {{config(
     materalized="table"
 )}}
-
+ 
 WITH complaint_table AS (
     SELECT * FROM {{ref('Complaint_Type')}}
 ),
@@ -23,7 +23,7 @@ created_date_table AS(
     WHERE complaint_type IN ('Noise')
 ),
 closed_date_table AS (
-   SELECT ROW_NUMBER() OVER() AS closed_date_dim_id,
+   SELECT ROW_NUMBER() OVER() AS closed_date_dim_id, unique_key
     FROM `bigquery-public-data.new_york_311.311_service_requests`
     WHERE complaint_type IN ('Noise')
 ),
@@ -38,4 +38,5 @@ complaint_type_dim_id,
 created_date_dim_id,
 closed_date_dim_id,
 crime_dim_id,
-GENERATE_UUID() AS unique_key
+unique_key
+FROM total_table
